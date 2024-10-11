@@ -1,40 +1,17 @@
-# Desafio Técnico Payfy
-Nesse desafio, você vai ter que criar uma API REST para um sistema de sorteios
+# Sorteio API
 
-### Descrição da Aplicação
-Nesse app você vai criar uma RESTful API, aonde os usuarios podem se registrar com um nome e email e participar de sorteios.
+## Dependências
+- Instale a linguagem Elixir: https://elixir-lang.org/install.html (Versão 1.17.3)
+    - Verifique a instalação com o comando `elixir -v`
+- Instale Docker, Nerdctl, ou qualquer outro gerenciador de containers
 
-### Regras de negócio a serem implementadas
-* deve ser implementado em elixir
-* usuários não devem poder entrar em sorteios após a data do sorteio
-* cada usuário só pode participar uma unica vez do sorteio
-* deve-se considerar que devido a api ser publica, pode ser que tenhamos muitos sorteios sendo criados concorrentementes
-* deve-se considerar que pessoas famosas porem criar sorteios muito populares aonde teriam muitos usuários se cadastrando ao mesmo tempo e participando do sistema. O sistema não pode cair nesses casos, ou falhar em respeitar as regras acima.
-* o sistema deve sortear um ganhador na data definida na criação do sorteio
+## Criação do banco de dados local
+- Caso tenha optado pelo uso do Nerdctl basta executar o arquivo `start-locally.sh`, ou rodar manualmente:
+    - Faça o build da image do banco de dados: `nerdctl [ou docker] build --file ./Dockerfile.database -t database .`
+    - Inicie o container com o banco de dados: `nerdctl [ou docker] run -d --name database-container -p 81:5432 database`, note que porta 81 está sendo utilizada, certifique-se de que ela não esteja sendo utilizada por nenhuma outra aplicação
+- Execute o seguinte comando para se certificar de que a imagem foi criada com sucesso: `nerdctl ps`, a saída deve ser algo próximo dê:
+`CONTAINER ID    IMAGE                                COMMAND                   CREATED          STATUS    PORTS                   NAMES
+98c1cf73c852    docker.io/library/database:latest    "docker-entrypoint.s…"    2 minutes ago    Up        0.0.0.0:81->5432/tcp    database-container`
 
-### Funcionalidades obrigatórias
-* rota registrar usuário, recebe um nome e email e retorna um id
-* rota criar um sorteio, recebe o nome do sorteio e data do sorteio e retorna um id
-* rota para participar de um sorteio, recebe um id de usuário e um id de sorteio e retorna ok
-* rota para consultar o resultado de um sorteio, recebe um id de sorteio e retorna o id, nome e email do usuário que ganhou, ou o erro apropriado caso o sorteio não tenha sido encerrado
 
-### Observações
-* Será questionado que problemas você considerou na implementação e como resolveu solucionar/evitar esses problemas.
-* Qualquer duvida você pode ou perguntar para quem lhe passou o desafio, ou assumir a resposta e documentar todas suas assunções no read-me do seu projeto
 
-### Critérios de avaliação
-* código está bem estruturado
-* código faz o uso correto de Design Patterns
-* sabe explicar o motivo das decisões de implementações
-* o projeto realiza todas as funcionalidades básicas requeridas
-* o README do projeto tem todos os detalhes que precisam para rodar o projeto em outro computador
-
-### Opcionais
-* outras rotas de CRUD para os recursos
-* autenticação
-* testes completos
-* documentação de como a infra do sistema iria funcionar
-
-### Sugestão de Estudo
-* [Clean Code - Guia e Exemplos](https://balta.io/artigos/clean-code)
-* [Elixir School - Lições sobre a linguagem de programação Elixir](https://elixirschool.com/pt/)
