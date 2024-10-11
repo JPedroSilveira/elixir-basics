@@ -8,7 +8,7 @@ defmodule LotteryWeb.Router do
   scope "/api", LotteryWeb do
     pipe_through :api
     get "/health", HealthCheck.HealthController, :index
-    resources "/v1/user", User.UserV1Controller, only: [:create, :show]
+    resources "/v1/user", Users.UserV1Controller, only: [:create, :show]
   end
 
   # Enable LiveDashboard in development

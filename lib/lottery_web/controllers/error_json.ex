@@ -20,7 +20,15 @@ defmodule LotteryWeb.ErrorJSON do
     %{errors: %{detail: Phoenix.Controller.status_message_from_template(template)}}
   end
 
-  def bad_request(%{changeset: changeset}) do
+  def error(%{status: :not_found}) do
+    %{
+      errors: %{
+        status: :not_found
+      }
+    }
+  end
+
+  def error(%{changeset: changeset}) do
     %{
       errors: Ecto.Changeset.traverse_errors(changeset, &ChangesetUtil.translate_errors/1)
     }

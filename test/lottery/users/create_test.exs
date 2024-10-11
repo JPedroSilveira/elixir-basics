@@ -1,31 +1,33 @@
 defmodule Lottery.Users.CreateTest do
   use ExUnit.Case
   use Lottery.DataCase
-  alias Lottery.Users.Create
-  alias Lottery.Users.User
+  alias Lottery.Users
+  alias Users.User
   alias Lottery.Repo
 
   test "Should store user" do
-    result = Create.call(%{email: "email@email.com", password: "hash", name: "Joao"})
-    {status, created_user} = result
+    # Act
+    {status, created_user} = create_user_by_email("email@email.com")
+    # Assert
     assert status == :ok
     stored_user = Repo.get(User, created_user.id)
     assert not is_nil(stored_user)
   end
 
   test "Should reject multiple users with same email" do
+    # Pre condition
     email = "email@email.com"
-    resultOne = create_user_by_email(email)
-    {status, _info} = resultOne
+    {status, _info} = create_user_by_email(email)
     assert status == :ok
-    resultTwo = create_user_by_email(email)
-    {status, info} = resultTwo
+    # Act
+    {status, info} = create_user_by_email(email)
+    # Assert
     assert status == :error
     {message, _info} = info.errors[:email]
     assert message == "has already been taken"
   end
 
   defp create_user_by_email(email) do
-    Create.call(%{email: email, password: "hash", name: "Joao"})
+    Users.create(%{email: email, password: "hash", name: "Joao"})
   end
 end
