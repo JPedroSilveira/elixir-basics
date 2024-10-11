@@ -10,6 +10,7 @@ defmodule LotteryWeb.Router do
     get "/health", HealthCheck.HealthCheckontroller, :index
     resources "/v1/user", Users.UserV1Controller, only: [:create, :show, :update]
     resources "/v1/event", Events.EventV1Controller, only: [:create, :show]
+    resources "/v1/participation", Participations.ParticipationsV1Controller, only: [:create, :index]
   end
 
   # Enable LiveDashboard in development

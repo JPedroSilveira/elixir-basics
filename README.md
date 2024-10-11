@@ -35,6 +35,7 @@
 
 ## Iniciar ambiente de desenvolvimento
 - `mix phx.server`
+- Lembre-se de iniciar o banco de dados local
 - A API deve estar disponível em [`localhost:4000`](http://localhost:4000)
 
 ## Verificar rotas existentes

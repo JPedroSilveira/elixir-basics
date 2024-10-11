@@ -1,13 +1,12 @@
-defmodule Lottery.Events.Event do
+defmodule Lottery.Participations.Participation do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @all_params [:user_id, :name, :date]
+  @all_params [:event_id, :user_id]
 
-  schema "events" do
+  schema "participation" do
+    field :event_id, :integer
     field :user_id, :integer
-    field :name, :string
-    field :date, :date
     timestamps()
   end
 
@@ -15,7 +14,5 @@ defmodule Lottery.Events.Event do
     %__MODULE__{}
     |> cast(params, @all_params)
     |> validate_required(@all_params)
-    |> validate_length(:name, max: 255)
   end
-
 end
