@@ -36,3 +36,6 @@
 ## Iniciar ambiente de desenvolvimento
 - `mix phx.server`
 - A API deve estar disponível em [`localhost:4000`](http://localhost:4000)
+
+## Verificar rotas existentes
+- `mix phx.routes`

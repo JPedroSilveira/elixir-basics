@@ -1,4 +1,4 @@
-defmodule LotteryWeb.HealthController do
+defmodule LotteryWeb.HealthCheck.HealthController do
   use LotteryWeb, :controller
   alias LotteryWeb.HealthCheck.DatabaseHealthCheck
 
@@ -7,13 +7,13 @@ defmodule LotteryWeb.HealthController do
     |> get_status(conn)
   end
 
-  def get_status(:ok, conn) do
+  defp get_status(:ok, conn) do
     conn
     |> put_status(200)
     |> json(%{status: "OK", database: "Up"})
   end
 
-  def get_status(:error, conn) do
+  defp get_status(:error, conn) do
     conn
     |> put_status(500)
     |> json(%{status: "Failure", database: "Down"})

@@ -21,6 +21,7 @@ defmodule Lottery.Users.User do
     |> validate_length(:email, max: 255)
     |> validate_format(:email, ~r/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
     |> validate_length(:password, max: 72)
+    |> unique_constraint(:email)
     |> hash_password()
   end
 

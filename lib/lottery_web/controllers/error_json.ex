@@ -1,4 +1,5 @@
 defmodule LotteryWeb.ErrorJSON do
+  alias Lottery.Util.ChangesetUtil
   @moduledoc """
   This module is invoked by your endpoint in case of errors on JSON requests.
 
@@ -17,5 +18,11 @@ defmodule LotteryWeb.ErrorJSON do
   # "Not Found".
   def render(template, _assigns) do
     %{errors: %{detail: Phoenix.Controller.status_message_from_template(template)}}
+  end
+
+  def bad_request(%{changeset: changeset}) do
+    %{
+      errors: Ecto.Changeset.traverse_errors(changeset, &ChangesetUtil.translate_errors/1)
+    }
   end
 end
