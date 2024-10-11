@@ -94,6 +94,72 @@ defmodule LotteryWeb.User.UserV1ControllerTest do
     end
   end
 
+  describe "Should update user" do
+    test "Should update user" do
+      # Pre condition
+      expected_id = create_user()
+      # Input
+      body = %{
+        name: "João Put",
+        email: "put@gmail.com"
+      }
+      # Act & Assert response
+      actual_id = build_conn()
+      |> put_req_header("accept", "application/json")
+      |> put("/api/v1/user/#{expected_id}", body)
+      |> json_response(200)
+      |> Map.get("data")
+      |> Map.get("id")
+      assert not is_nil(actual_id)
+      assert actual_id == expected_id
+      # Assert data was updated
+      data = build_conn()
+      |> put_req_header("accept", "application/json")
+      |> get("/api/v1/user/#{actual_id}")
+      |> json_response(200)
+      |> Map.get("data")
+      # Assert
+      assert not is_nil(data)
+      assert data["id"] == actual_id
+      assert data["email"] == "put@gmail.com"
+      assert data["name"] == "João Put"
+    end
+
+    test "Should fail to update given invalid id" do
+      # Input
+      body = %{
+        name: "João Put",
+        email: "put@gmail.com"
+      }
+      # Act & Assert
+      response_status = build_conn()
+      |> put_req_header("accept", "application/json")
+      |> put("/api/v1/user/99", body)
+      |> json_response(404)
+      |> Map.get("errors")
+      |> Map.get("status")
+      assert response_status == "not_found"
+    end
+
+    test "Should failt to update given invalid field" do
+      # Pre condition
+      id = create_user()
+      # Input
+      body = %{
+        email: "invalid mail"
+      }
+      # Act & Assert response
+      [error_message | _] = build_conn()
+      |> put_req_header("accept", "application/json")
+      |> put("/api/v1/user/#{id}", body)
+      |> json_response(400)
+      |> Map.get("errors")
+      |> Map.get("email")
+      assert error_message == "has invalid format"
+    end
+
+  end
+
   defp create_user() do
     body = %{
       name: "João Get",

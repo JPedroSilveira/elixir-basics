@@ -17,4 +17,13 @@ defmodule LotteryWeb.Users.UserV1JSON do
       }
     }
   end
+
+  def update(%{user: user}) do
+    %{
+      data: %{
+        id: user.id
+      },
+      message: "User updated."
+    }
+  end
 end

@@ -20,4 +20,12 @@ defmodule LotteryWeb.Users.UserV1Controller do
       |> render(:get, user: user)
     end
   end
+
+  def update(conn, params) do
+    with {:ok, %User{} = user} <- Users.update(params) do
+      conn
+      |> put_status(200)
+      |> render(:update, user: user)
+    end
+  end
 end

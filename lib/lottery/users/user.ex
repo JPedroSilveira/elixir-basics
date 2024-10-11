@@ -2,8 +2,7 @@ defmodule Lottery.Users.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @required_params [:name, :email, :password]
-  @hash_length 64
+  @all_params [:name, :email, :password]
 
   schema "users" do
       field :name, :string
@@ -13,21 +12,43 @@ defmodule Lottery.Users.User do
       timestamps()
   end
 
-  def changeset(user \\ %__MODULE__{}, params) do
+  def changeset(params) do
+    %__MODULE__{}
+    |> cast(params, @all_params)
+    |> validate_required(@all_params)
+    |> validate_general_fields
+    |> validate_password
+  end
+
+  def changeset(user, params) do
     user
-    |> cast(params, @required_params)
-    |> validate_required(@required_params)
+    |> cast(params, @all_params)
+    |> validate_update
+  end
+
+  defp validate_update(changeset) do
+    if Map.has_key?(changeset.changes, :password), do: validate_password(changeset), else: changeset
+    |> validate_general_fields
+  end
+
+  defp validate_general_fields(changeset) do
+    changeset
     |> validate_length(:name, max: 255)
     |> validate_length(:email, max: 255)
     |> validate_format(:email, ~r/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
     |> validate_length(:password, max: 72)
     |> unique_constraint(:email)
+  end
+
+  defp validate_password(changeset) do
+    changeset
+    |> validate_length(:password, min: 1, max: 72)
     |> hash_password()
   end
 
   defp hash_password(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
     changeset
-    |> change(%{password_hash: Pbkdf2.Base.hash_password(password, Pbkdf2.Base.gen_salt(), length: @hash_length, format: :modular)})
+    |> change(%{password_hash: Pbkdf2.hash_pwd_salt(password)})
   end
 
   defp hash_password(changeset), do: changeset
