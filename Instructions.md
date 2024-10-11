@@ -9,7 +9,7 @@ Nesse app você vai criar uma RESTful API, aonde os usuarios podem se registrar 
 * usuários não devem poder entrar em sorteios após a data do sorteio
 * cada usuário só pode participar uma unica vez do sorteio
 * deve-se considerar que devido a api ser publica, pode ser que tenhamos muitos sorteios sendo criados concorrentementes
-* deve-se considerar que pessoas famosas porem criar sorteios muito populares aonde teriam muitos usuários se cadastrando ao mesmo tempo e participando do sistema. O sistema não pode cair nesses casos, ou falhar em respeitar as regras acima.
+* deve-se considerar que pessoas famosas podem criar sorteios muito populares aonde teriam muitos usuários se cadastrando ao mesmo tempo e participando do sistema. O sistema não pode cair nesses casos, ou falhar em respeitar as regras acima.
 * o sistema deve sortear um ganhador na data definida na criação do sorteio
 
 ### Funcionalidades obrigatórias
