@@ -40,3 +40,35 @@
 
 ## Verificar rotas existentes
 - `mix phx.routes`
+
+## Endpoints
+- GET    /api/health                 LotteryWeb.HealthCheck.HealthCheckontroller :index
+- GET    /api/v1/user/:id            LotteryWeb.Users.UserV1Controller :show
+- POST   /api/v1/user                LotteryWeb.Users.UserV1Controller :create
+    - Body example:
+    {
+        "name": "João",
+        "email": "email@gmail.com",
+        "password": "jpmc2106"
+    }
+- PUT    /api/v1/user/:id            LotteryWeb.Users.UserV1Controller :update
+    - Body example:
+    {
+		"email": "email@gmail.com"
+    }   
+- GET    /api/v1/event/:id           LotteryWeb.Events.EventV1Controller :show
+- POST   /api/v1/event               LotteryWeb.Events.EventV1Controller :create
+    - Body example:
+    {
+        "user_id": 1,
+        "name": "Event",
+        "date": "2024-10-12"
+    }
+- GET    /api/v1/participation       LotteryWeb.Participations.ParticipationsV1Controller :index
+- POST   /api/v1/participation       LotteryWeb.Participations.ParticipationsV1Controller :create
+    - Body example:
+    {
+        "user_id": 1,
+        "event_id": 1
+    }
+
