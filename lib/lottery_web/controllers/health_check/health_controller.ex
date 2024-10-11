@@ -1,4 +1,4 @@
-defmodule LotteryWeb.HealthCheck.HealthController do
+defmodule LotteryWeb.HealthCheck.HealthCheckontroller do
   use LotteryWeb, :controller
   alias LotteryWeb.HealthCheck.DatabaseHealthCheck
 

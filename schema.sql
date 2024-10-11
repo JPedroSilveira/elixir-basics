@@ -11,7 +11,7 @@ CREATE DATABASE lottery;
 -- CREATE TABLE events (
 --     event_id BIGSERIAL PRIMARY KEY,
 --     user_id BIGINT NOT NULL REFERENCES users(user_id),
---     event_date DATE NOT NULL
+--     date DATE NOT NULL
 -- );
 
 -- CREATE TABLE event_participation (
