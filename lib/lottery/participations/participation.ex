@@ -14,5 +14,6 @@ defmodule Lottery.Participations.Participation do
     %__MODULE__{}
     |> cast(params, @all_params)
     |> validate_required(@all_params)
+    |> unique_constraint([:user_id, :event_id])
   end
 end

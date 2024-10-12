@@ -8,5 +8,6 @@ defmodule Lottery.Repo.Migrations.AddEventUserTable do
       add :user_id, references("users", with: [user_id: :user_id]), null: false
       timestamps()
     end
+    create index("participation", [:user_id, :event_id], unique: true)
   end
 end

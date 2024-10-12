@@ -7,7 +7,7 @@ defmodule Lottery.Events.Event do
   schema "events" do
     field :user_id, :integer
     field :name, :string
-    field :date, :date
+    field :date, :naive_datetime
     timestamps()
   end
 

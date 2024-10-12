@@ -7,14 +7,14 @@ defmodule Lottery.Participations.Create do
   def call(%{"event_id" => event_id, "user_id" => user_id} = params) do
     case Repo.get(Event, event_id) do
       nil -> {:error, :not_found}
-      participation -> create(params, user_id)
+      _ -> create(params, user_id)
     end
   end
 
   defp create(params, user_id) do
     case Repo.get(User, user_id) do
       nil -> {:error, :not_found}
-      participation -> create(params)
+      _ -> create(params)
     end
   end
 
