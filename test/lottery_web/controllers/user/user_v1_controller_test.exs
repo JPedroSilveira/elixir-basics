@@ -1,7 +1,8 @@
-defmodule LotteryWeb.User.UserV1ControllerTest do
+defmodule LotteryWeb.Users.UserV1ControllerTest do
   use LotteryWeb.ConnCase, async: true
+  alias Lottery.Util.Test.UserUtil
 
-  describe "Should create user" do
+  describe "Create user" do
     test "Should create user" do
       # Input
       body = %{
@@ -64,12 +65,13 @@ defmodule LotteryWeb.User.UserV1ControllerTest do
     end
   end
 
-  describe "Should fetch user" do
+  describe "Fetch user" do
     test "Should fetch user by id" do
+      conn = build_conn()
       # Pre condition
-      id = create_user()
+      id = UserUtil.create(conn)
       # Act
-      data = build_conn()
+      data = conn
       |> put_req_header("accept", "application/json")
       |> get("/api/v1/user/#{id}")
       |> json_response(200)
@@ -94,17 +96,18 @@ defmodule LotteryWeb.User.UserV1ControllerTest do
     end
   end
 
-  describe "Should update user" do
+  describe "Update user" do
     test "Should update user" do
+      conn = build_conn()
       # Pre condition
-      expected_id = create_user()
+      expected_id = UserUtil.create(conn)
       # Input
       body = %{
         name: "João Put",
         email: "put@gmail.com"
       }
       # Act & Assert response
-      actual_id = build_conn()
+      actual_id = conn
       |> put_req_header("accept", "application/json")
       |> put("/api/v1/user/#{expected_id}", body)
       |> json_response(200)
@@ -142,14 +145,15 @@ defmodule LotteryWeb.User.UserV1ControllerTest do
     end
 
     test "Should failt to update given invalid field" do
+      conn = build_conn()
       # Pre condition
-      id = create_user()
+      id = UserUtil.create(conn)
       # Input
       body = %{
         email: "invalid mail"
       }
       # Act & Assert response
-      [error_message | _] = build_conn()
+      [error_message | _] = conn
       |> put_req_header("accept", "application/json")
       |> put("/api/v1/user/#{id}", body)
       |> json_response(400)
@@ -158,19 +162,5 @@ defmodule LotteryWeb.User.UserV1ControllerTest do
       assert error_message == "has invalid format"
     end
 
-  end
-
-  defp create_user() do
-    body = %{
-      name: "João Get",
-      email: "email@gmail.com",
-      password: "password"
-    }
-    build_conn()
-    |> put_req_header("accept", "application/json")
-    |> post("/api/v1/user", body)
-    |> json_response(201)
-    |> Map.get("data")
-    |> Map.get("id")
   end
 end
