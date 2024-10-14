@@ -11,6 +11,7 @@ defmodule LotteryWeb.Router do
     resources "/v1/user", Users.UserV1Controller, only: [:create, :show, :update]
     resources "/v1/event", Events.EventV1Controller, only: [:create, :show]
     resources "/v1/participation", Participations.ParticipationsV1Controller, only: [:create, :index]
+    resources "/v1/winner", Winners.WinnerV1Controller, only: [:show]
   end
 
   # Enable LiveDashboard in development

@@ -2,10 +2,11 @@ defmodule Lottery.Users.UpdateTest do
   use ExUnit.Case
   use Lottery.DataCase
   alias Lottery.Users
+  alias Lottery.Util.Test.UserRepoUtil
 
   test "Should update all fields" do
     # Pre condition
-    {status, created_user} = create_user()
+    {status, created_user} = UserRepoUtil.create("email@email.com")
     assert status == :ok
 
     # Act
@@ -25,7 +26,7 @@ defmodule Lottery.Users.UpdateTest do
 
   test "Should update only email" do
     # Pre condition
-    {status, created_user} = create_user()
+    {status, created_user} = UserRepoUtil.create("email@email.com")
     assert status == :ok
 
     # Act
@@ -45,7 +46,7 @@ defmodule Lottery.Users.UpdateTest do
 
   test "Should update only name" do
     # Pre condition
-    {status, created_user} = create_user()
+    {status, created_user} = UserRepoUtil.create("email@email.com")
     assert status == :ok
 
     # Act
@@ -65,7 +66,7 @@ defmodule Lottery.Users.UpdateTest do
 
   test "Should update only password" do
     # Pre condition
-    {status, created_user} = create_user()
+    {status, created_user} = UserRepoUtil.create("email@email.com")
     assert status == :ok
 
     # Act
@@ -81,9 +82,5 @@ defmodule Lottery.Users.UpdateTest do
     assert is_nil(fetched_user.password)
     assert not is_nil(fetched_user.password_hash)
     assert Pbkdf2.verify_pass("password2", fetched_user.password_hash)
-  end
-
-  defp create_user() do
-    Users.create(%{email: "email@email.com", password: "password", name: "Joao"})
   end
 end

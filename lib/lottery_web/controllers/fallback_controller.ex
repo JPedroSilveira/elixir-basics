@@ -9,6 +9,13 @@ defmodule LotteryWeb.FallbackController do
     |> render(:error, status: :not_found)
   end
 
+  def call(conn, {:error, :bad_request}) do
+    conn
+    |> put_status(400)
+    |> put_view(json: ErrorJSON)
+    |> render(:error, status: :bad_request)
+  end
+
   def call(conn, {:error, changeset}) do
     conn
     |> put_status(400)

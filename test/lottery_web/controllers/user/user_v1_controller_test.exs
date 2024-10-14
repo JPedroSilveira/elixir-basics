@@ -1,6 +1,6 @@
 defmodule LotteryWeb.Users.UserV1ControllerTest do
   use LotteryWeb.ConnCase, async: true
-  alias Lottery.Util.Test.UserUtil
+  alias Lottery.Util.Test.UserControllerUtil
 
   describe "Create user" do
     test "Should create user" do
@@ -69,7 +69,7 @@ defmodule LotteryWeb.Users.UserV1ControllerTest do
     test "Should fetch user by id" do
       conn = build_conn()
       # Pre condition
-      id = UserUtil.create(conn)
+      id = UserControllerUtil.create(conn)
       # Act
       data = conn
       |> put_req_header("accept", "application/json")
@@ -100,7 +100,7 @@ defmodule LotteryWeb.Users.UserV1ControllerTest do
     test "Should update user" do
       conn = build_conn()
       # Pre condition
-      expected_id = UserUtil.create(conn)
+      expected_id = UserControllerUtil.create(conn)
       # Input
       body = %{
         name: "João Put",
@@ -147,7 +147,7 @@ defmodule LotteryWeb.Users.UserV1ControllerTest do
     test "Should failt to update given invalid field" do
       conn = build_conn()
       # Pre condition
-      id = UserUtil.create(conn)
+      id = UserControllerUtil.create(conn)
       # Input
       body = %{
         email: "invalid mail"

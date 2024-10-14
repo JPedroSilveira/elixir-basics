@@ -20,10 +20,10 @@ defmodule LotteryWeb.ErrorJSON do
     %{errors: %{detail: Phoenix.Controller.status_message_from_template(template)}}
   end
 
-  def error(%{status: :not_found}) do
+  def error(%{status: status}) do
     %{
       errors: %{
-        status: :not_found
+        status: status
       }
     }
   end

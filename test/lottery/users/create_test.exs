@@ -4,10 +4,11 @@ defmodule Lottery.Users.CreateTest do
   alias Lottery.Users
   alias Users.User
   alias Lottery.Repo
+  alias Lottery.Util.Test.UserRepoUtil
 
   test "Should store user" do
     # Act
-    {status, created_user} = create_user_by_email("email@email.com")
+    {status, created_user} = UserRepoUtil.create("email@email.com")
     # Assert
     assert status == :ok
     stored_user = Repo.get(User, created_user.id)
@@ -17,17 +18,13 @@ defmodule Lottery.Users.CreateTest do
   test "Should reject multiple users with same email" do
     # Pre condition
     email = "email@email.com"
-    {status, _info} = create_user_by_email(email)
+    {status, _info} = UserRepoUtil.create(email)
     assert status == :ok
     # Act
-    {status, info} = create_user_by_email(email)
+    {status, info} = UserRepoUtil.create(email)
     # Assert
     assert status == :error
     {message, _info} = info.errors[:email]
     assert message == "has already been taken"
-  end
-
-  defp create_user_by_email(email) do
-    Users.create(%{email: email, password: "hash", name: "Joao"})
   end
 end

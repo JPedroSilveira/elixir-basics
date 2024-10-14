@@ -14,6 +14,8 @@ defmodule Lottery.Application do
       {Phoenix.PubSub, name: Lottery.PubSub},
       # Start a worker by calling: Lottery.Worker.start_link(arg)
       # {Lottery.Worker, arg},
+        # Start winners job
+      {Lottery.Job.Winners.WinnersJob, 5000},
       # Start to serve requests, typically the last entry
       LotteryWeb.Endpoint
     ]

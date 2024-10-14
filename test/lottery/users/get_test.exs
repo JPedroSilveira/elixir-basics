@@ -2,10 +2,11 @@ defmodule Lottery.Users.GetTest do
   use ExUnit.Case
   use Lottery.DataCase
   alias Lottery.Users
+  alias Lottery.Util.Test.UserRepoUtil
 
   test "Should fetch user by id" do
     # Pre condition
-    {status, created_user} = create_user_by_email("email@email.com")
+    {status, created_user} = UserRepoUtil.create("email@email.com")
     assert status == :ok
 
     # Act
@@ -21,9 +22,9 @@ defmodule Lottery.Users.GetTest do
 
   test "Should fetch different users by id" do
     # Pre condition
-    {status, created_user_one} = create_user_by_email("one@email.com")
+    {status, created_user_one} = UserRepoUtil.create("one@email.com")
     assert status == :ok
-    {status, created_user_two} = create_user_by_email("two@email.com")
+    {status, created_user_two} = UserRepoUtil.create("two@email.com")
     assert status == :ok
 
     # Act
@@ -35,9 +36,5 @@ defmodule Lottery.Users.GetTest do
     assert status_two == :ok
     assert created_user_one.email == fetched_user_one.email
     assert fetched_user_two.email == fetched_user_two.email
-  end
-
-  defp create_user_by_email(email) do
-    Users.create(%{email: email, password: "hash", name: "Joao"})
   end
 end
